@@ -1,0 +1,96 @@
+// Crear un contenedor para los botones
+var container = document.createElement('div');
+container.style.position = 'fixed';
+container.style.bottom = '10px';
+container.style.left = '10px';
+container.style.zIndex = '1000';
+container.style.display = 'flex';
+container.style.gap = '10px';
+
+// Estilos para los botones
+var buttonStyle = `
+    padding: 10px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+`;
+
+// Función para crear un botón
+function createButton(label, keyCode) {
+    var button = document.createElement('button');
+    button.innerHTML = label;
+    button.style.cssText = buttonStyle;
+    button.addEventListener('click', function() {
+        var event = new KeyboardEvent('keydown', {keyCode: keyCode, which: keyCode, key: label});
+        document.dispatchEvent(event);
+    });
+    return button;
+}
+
+// Crear botones A, D, W, P
+var buttons = [
+    createButton('A', 65), // Código de tecla para 'A'
+    createButton('D', 68), // Código de tecla para 'D'
+    createButton('W', 87), // Código de tecla para 'W'
+    createButton('P', 80)  // Código de tecla para 'P'
+];
+
+// Agregar botones al contenedor
+buttons.forEach(function(button) {
+    container.appendChild(button);
+});
+
+// Agregar el contenedor al cuerpo del documento
+document.body.appendChild(container);
+
+// Crear un contenedor para el menú de control
+var menuContainer = document.createElement('div');
+menuContainer.style.position = 'fixed';
+menuContainer.style.top = '10px';
+menuContainer.style.left = '10px';
+menuContainer.style.zIndex = '1000';
+menuContainer.style.backgroundColor = '#ffffff';
+menuContainer.style.border = '1px solid #ccc';
+menuContainer.style.borderRadius = '5px';
+menuContainer.style.padding = '10px';
+menuContainer.style.boxShadow = '2px 2px 5px rgba(0,0,0,0.2)';
+
+// Crear elementos del menú de control
+var menuTitle = document.createElement('h3');
+menuTitle.innerText = 'Posición de los Botones';
+menuTitle.style.marginTop = '0';
+
+var leftInput = document.createElement('input');
+leftInput.type = 'number';
+leftInput.value = 10;
+leftInput.style.width = '50px';
+
+var bottomInput = document.createElement('input');
+bottomInput.type = 'number';
+bottomInput.value = 10;
+bottomInput.style.width = '50px';
+
+var updateButton = document.createElement('button');
+updateButton.innerText = 'Actualizar';
+updateButton.style.cssText = buttonStyle;
+updateButton.style.marginTop = '10px';
+updateButton.addEventListener('click', function() {
+    container.style.left = leftInput.value + 'px';
+    container.style.bottom = bottomInput.value + 'px';
+});
+
+// Agregar elementos al menú de control
+menuContainer.appendChild(menuTitle);
+menuContainer.appendChild(document.createTextNode('Izquierda: '));
+menuContainer.appendChild(leftInput);
+menuContainer.appendChild(document.createElement('br'));
+menuContainer.appendChild(document.createTextNode('Abajo: '));
+menuContainer.appendChild(bottomInput);
+menuContainer.appendChild(document.createElement('br'));
+menuContainer.appendChild(updateButton);
+
+// Agregar el menú de control al cuerpo del documento
+document.body.appendChild(menuContainer);
